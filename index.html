@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nadya Aguado | Estrategia digital, sistemas e IA útil</title>
+  <meta name="description" content="Nadya Aguado ayuda a negocios y marcas a ordenar contenido, mensajes, webs y sistemas simples para vender con más claridad." />
+  <style>
+    :root{
+      --bg:#FCFCFD;
+      --surface:#FFFFFF;
+      --text:#111827;
+      --muted:#6B7280;
+      --line:#E5E7EB;
+      --primary:#0F766E;
+      --primary-dark:#115E59;
+      --accent:#ECFDF5;
+      --soft:#F3F4F6;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit}
+    .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+    .nav{
+      position:sticky;top:0;z-index:20;
+      backdrop-filter:blur(14px);
+      background:rgba(252,252,253,.88);
+      border-bottom:1px solid var(--line);
+    }
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:12px;padding:14px 0;
+    }
+    .brand{font-weight:800;letter-spacing:-.02em}
+    .nav-links{display:flex;gap:18px;font-size:14px;color:var(--muted)}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:14px 18px;border-radius:14px;font-weight:700;
+      border:1px solid transparent;transition:.2s ease;
+    }
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-secondary{background:#fff;border-color:var(--line);color:var(--primary-dark)}
+    .hero{
+      padding:84px 0 58px;
+      display:grid;grid-template-columns:1.2fr .8fr;gap:34px;align-items:center;
+    }
+    .eyebrow{
+      display:inline-block;padding:8px 12px;border-radius:999px;
+      background:var(--accent);color:var(--primary-dark);
+      font-size:13px;font-weight:700;margin-bottom:18px;
+    }
+    h1{
+      margin:0 0 16px;
+      font-size:clamp(38px,6vw,68px);
+      line-height:.96;letter-spacing:-.04em;
+    }
+    .hero p{
+      margin:0 0 24px;
+      font-size:clamp(17px,2vw,20px);
+      color:var(--muted);max-width:60ch;
+    }
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+    .hero-note{color:var(--muted);font-size:14px}
+    .card{
+      background:var(--surface);border:1px solid var(--line);
+      border-radius:24px;box-shadow:0 8px 30px rgba(17,24,39,.05);
+    }
+    .hero-side{padding:26px}
+    .hero-side h3{margin:0 0 14px;font-size:20px}
+    .mini-list{display:grid;gap:12px}
+    .mini-item{
+      padding:14px;border-radius:16px;background:var(--soft);
+      border:1px solid var(--line);
+    }
+    .mini-item strong{display:block;margin-bottom:4px}
+    section{padding:24px 0 70px}
+    .section-title{
+      margin:0 0 10px;font-size:clamp(28px,4vw,42px);letter-spacing:-.03em;
+    }
+    .section-lead{margin:0 0 28px;color:var(--muted);max-width:74ch}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .box,.service-card{padding:24px}
+    .box h3,.service-card h3{margin:0 0 10px;font-size:22px}
+    .box p,.service-card p{margin:0;color:var(--muted)}
+    .service-card ul{margin:14px 0 0;padding-left:18px;color:var(--muted)}
+    .service-card li+li{margin-top:6px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .steps{display:grid;gap:14px}
+    .step{
+      padding:18px 20px;display:grid;grid-template-columns:72px 1fr;
+      gap:16px;align-items:start;
+    }
+    .step-num{
+      width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
+      background:var(--accent);color:var(--primary-dark);font-weight:800;font-size:20px;
+    }
+    .socials{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+    .social-link{
+      padding:10px 14px;border-radius:999px;border:1px solid var(--line);
+      background:#fff;color:var(--primary-dark);font-size:14px;font-weight:600;
+    }
+    .cta{
+      padding:30px;display:grid;gap:12px;
+      background:linear-gradient(135deg,var(--primary-dark),#1F2937);color:#fff;
+    }
+    .cta p{margin:0;color:rgba(255,255,255,.84)}
+    .footer{padding:30px 0 40px;color:var(--muted);font-size:14px}
+    @media (max-width:900px){
+      .hero,.grid-3,.grid-2{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .step{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="wrap nav-inner">
+      <div class="brand">Nadya Aguado</div>
+      <div class="nav-links">
+        <a href="#servicios">Servicios</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <a class="btn btn-primary" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20tus%20servicios." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Estrategia digital · contenido · sistemas simples</span>
+        <h1>Organizo lo que tu negocio hoy comunica, vende y responde.</h1>
+        <p>Trabajo con marcas, servicios y negocios que ya tienen algo valioso, pero todavía lo presentan, lo explican o lo sostienen con demasiado caos. Bajo eso a estructura, mensajes, contenido y activos digitales más claros.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#proceso">Quiero ver cómo trabajás</a>
+          <a class="btn btn-secondary" href="#servicios">Ver servicios</a>
+        </div>
+        <div class="hero-note">Sin humo técnico. Sin contenido clonado. Con criterio, estructura y uso práctico de herramientas.</div>
+      </div>
+
+      <div class="card hero-side">
+        <h3>Qué suelo ordenar</h3>
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Mensajes y atención</strong>
+            <span>Consultas que se enfrían, respuestas flojas y seguimiento inexistente.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Servicios y oferta</strong>
+            <span>Lo que hacés tiene valor, pero no siempre se entiende rápido ni se percibe bien.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Contenido y sistema</strong>
+            <span>Muchas ideas, poca estructura y demasiado tiempo perdido en decidir qué hacer.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Cómo te puedo ayudar</h2>
+      <p class="section-lead">No vendo una herramienta aislada. Trabajo sobre problemas concretos: atención comercial, webs poco claras, contenido sin sistema y estructura digital débil.</p>
+      <div class="grid-3" id="servicios">
+        <div class="card service-card">
+          <h3>Sistema Anti-Consultas Perdidas</h3>
+          <p>Ordeno mensajes, respuestas y seguimiento para que una consulta no se pierda por desorden digital.</p>
+          <ul>
+            <li>Diagnóstico de fugas</li>
+            <li>Mensajes base</li>
+            <li>Orden de atención</li>
+            <li>Seguimiento simple</li>
+          </ul>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20el%20Sistema%20Anti-Consultas%20Perdidas." target="_blank" rel="noopener noreferrer">Consultar</a>
+          </div>
+        </div>
+
+        <div class="card service-card">
+          <h3>Webs comerciales</h3>
+          <p>Diseño landing pages y webs simples orientadas a claridad, credibilidad y acción.</p>
+          <ul>
+            <li>Estructura y arquitectura</li>
+            <li>Copy de conversión</li>
+            <li>Implementación simple</li>
+            <li>Checklist de validación</li>
+          </ul>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20una%20web%20comercial." target="_blank" rel="noopener noreferrer">Consultar</a>
+          </div>
+        </div>
+
+        <div class="card service-card">
+          <h3>Sistemas de contenido e IA útil</h3>
+          <p>Creo estructuras, prompts, recursos y generadores para producir contenido con más velocidad y menos desgaste.</p>
+          <ul>
+            <li>Calendarios y sistemas</li>
+            <li>Prompts operativos</li>
+            <li>GPTs o flujos internos</li>
+            <li>Activos digitales reutilizables</li>
+          </ul>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20sistemas%20de%20contenido%20e%20IA%20%C3%BAtil." target="_blank" rel="noopener noreferrer">Consultar</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proceso">
+      <h2 class="section-title">Mi forma de trabajar</h2>
+      <p class="section-lead">Empiezo por lo que más fricción genera y lo convierto en una estructura más clara, usable y sostenible.</p>
+      <div class="steps">
+        <div class="card step">
+          <div class="step-num">01</div>
+          <div>
+            <strong>Detecto el problema real</strong><br>
+            <span style="color:#6B7280">No parto de la herramienta. Parto de la parte del negocio que hoy está floja o mal resuelta.</span>
+          </div>
+        </div>
+        <div class="card step">
+          <div class="step-num">02</div>
+          <div>
+            <strong>Defino una salida simple</strong><br>
+            <span style="color:#6B7280">Busco una solución clara, usable y proporcional al momento real del negocio.</span>
+          </div>
+        </div>
+        <div class="card step">
+          <div class="step-num">03</div>
+          <div>
+            <strong>Lo bajo a algo concreto</strong><br>
+            <span style="color:#6B7280">Puede ser un sistema, una web, una estructura de mensajes, un recurso o un flujo de contenido.</span>
+          </div>
+        </div>
+        <div class="card step">
+          <div class="step-num">04</div>
+          <div>
+            <strong>Dejo criterio y continuidad</strong><br>
+            <span style="color:#6B7280">No solo entrego piezas. También dejo una lógica para que no vuelvas a improvisar todo.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proyectos">
+      <h2 class="section-title">Verticales y proyectos</h2>
+      <p class="section-lead">Mi marca personal es el paraguas. Desde acá también desarrollo verticales y proyectos específicos según nicho.</p>
+      <div class="grid-2">
+        <div class="card box">
+          <h3>Turishack</h3>
+          <p>Sistemas simples para negocios turísticos que quieren responder mejor, ordenar consultas y vender con más claridad.</p>
+          <div class="actions">
+            <a class="btn btn-secondary" href="https://nadya-coder.github.io/nadya-landing/" target="_blank" rel="noopener noreferrer">Ver Turishack</a>
+          </div>
+        </div>
+        <div class="card box">
+          <h3>SENSSIA</h3>
+          <p>Proyecto orientado a contenido, herramientas y comunicación aplicada a productos sensoriales y gourmet.</p>
+          <div class="actions">
+            <a class="btn btn-secondary" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20SENSSIA." target="_blank" rel="noopener noreferrer">Consultar</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Encontrame también acá</h2>
+      <p class="section-lead">Esta es mi base principal. Desde acá podés ir a mis servicios, a mis verticales y a mis otros canales.</p>
+      <div class="socials">
+        <a class="social-link" href="https://www.instagram.com/marunadu09/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a class="social-link" href="https://www.linkedin.com/in/nadya-aguado-9b71a5378/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="social-link" href="https://www.facebook.com/nadymari" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a class="social-link" href="mailto:turishack@gmail.com?subject=Consulta%20desde%20la%20landing%20de%20Nadya">Email</a>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="card cta">
+        <h2 class="section-title" style="color:white; margin:0;">Si hoy tu negocio vende, comunica o responde con demasiado caos, eso se puede ordenar.</h2>
+        <p>Podemos empezar por atención, por web, por contenido o por estructura. Lo importante es dejar de improvisar donde más te cuesta sostener el negocio.</p>
+        <div class="hero-actions" style="margin:0;">
+          <a class="btn btn-primary" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20mis%20necesidades%20digitales." target="_blank" rel="noopener noreferrer">Escribirme por WhatsApp</a>
+          <a class="btn btn-secondary" href="mailto:turishack@gmail.com?subject=Consulta%20desde%20la%20landing%20de%20Nadya">Enviar email</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <div>Nadya Aguado · Estrategia digital, sistemas e IA útil</div>
+  </footer>
+</body>
+</html>
