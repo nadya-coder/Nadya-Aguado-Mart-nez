@@ -1,2 +1,2 @@
-# Nadya-Aguado-Mart-nez
+# Nadya-Aguado-Martinez
 Landing Page Personal, donde estan los servicios que ofrezco
