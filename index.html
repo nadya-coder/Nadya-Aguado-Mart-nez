@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nadya Aguado — Estrategia digital, sistemas e IA útil</title>
+  <meta name="description" content="Ayudo a negocios y marcas a ordenar contenido, mensajes, webs y sistemas simples para vender con más claridad. Sin humo. Con criterio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #F7F4F0;
+      --bg2:        #EDE9E3;
+      --surface:    #FFFFFF;
+      --ink:        #1C1917;
+      --ink-mid:    #44403C;
+      --ink-soft:   #78716C;
+      --ink-faint:  #A8A29E;
+      --accent:     #C2825A;        /* terracota cálido */
+      --accent-lt:  #F0E4D9;        /* terracota muy suave */
+      --accent-dk:  #9A5E38;
+      --teal:       #2D7A6F;        /* verde azulado sobrio */
+      --teal-lt:    #D4EEEA;
+      --line:       #DDD9D3;
+      --serif:      'Playfair Display', Georgia, serif;
+      --sans:       'Outfit', system-ui, sans-serif;
+      --radius:     12px;
+      --shadow:     0 4px 24px rgba(28,25,23,.07);
+      --shadow-lg:  0 12px 48px rgba(28,25,23,.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── CURSOR DOT ─── */
+    .cursor {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transition: transform .15s ease;
+      transform: translate(-50%,-50%);
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(247,244,240,.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: var(--shadow); }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -.01em;
+      color: var(--ink);
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: .83rem; font-weight: 400; color: var(--ink-soft);
+      letter-spacing: .03em; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      font-size: .82rem; font-weight: 600;
+      background: var(--accent); color: #fff;
+      padding: .55rem 1.4rem; border-radius: 999px;
+      letter-spacing: .02em; transition: background .2s, transform .2s;
+    }
+    .nav-cta:hover { background: var(--accent-dk); transform: translateY(-1px); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      padding: 120px 2.5rem 80px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    /* mesh background */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 40%, var(--accent-lt) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, var(--teal-lt) 0%, transparent 60%);
+      z-index: 0;
+    }
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .75rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent-dk);
+      background: var(--accent-lt);
+      padding: .4rem 1rem; border-radius: 999px;
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp .7s .1s forwards;
+    }
+    .hero-eyebrow span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.6rem, 5.5vw, 5.2rem);
+      line-height: 1.05; letter-spacing: -.025em;
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp .8s .2s forwards;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+
+    .hero-sub {
+      font-size: 1.05rem; color: var(--ink-soft); font-weight: 300;
+      max-width: 480px; line-height: 1.75;
+      margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp .8s .35s forwards;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp .8s .5s forwards;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .8rem 1.8rem; border-radius: 999px;
+      background: var(--ink); color: #fff;
+      font-size: .88rem; font-weight: 600;
+      letter-spacing: .02em; transition: background .2s, transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(194,130,90,.3); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .8rem 1.8rem; border-radius: 999px;
+      background: transparent; color: var(--ink-mid);
+      border: 1.5px solid var(--line);
+      font-size: .88rem; font-weight: 500;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--ink-mid); color: var(--ink); }
+
+    /* hero card */
+    .hero-card {
+      background: var(--surface); border-radius: 20px;
+      padding: 2rem; box-shadow: var(--shadow-lg);
+      border: 1px solid var(--line);
+      opacity: 0; animation: fadeLeft .9s .4s forwards;
+    }
+    .hero-card h3 {
+      font-family: var(--serif); font-size: 1.2rem;
+      margin-bottom: 1.25rem; color: var(--ink);
+    }
+    .mini-list { display: grid; gap: .75rem; }
+    .mini-item {
+      display: flex; gap: .75rem; align-items: flex-start;
+      padding: .9rem; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--line);
+      transition: background .2s;
+    }
+    .mini-item:hover { background: var(--accent-lt); }
+    .mini-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0; margin-top: 6px;
+    }
+    .mini-item strong { display: block; font-size: .9rem; font-weight: 600; margin-bottom: .2rem; }
+    .mini-item span { font-size: .83rem; color: var(--ink-soft); line-height: 1.5; }
+
+    /* ─── SECTIONS WRAPPER ─── */
+    .section { padding: 6rem 2.5rem; border-top: 1px solid var(--line); }
+    .section-alt { background: var(--bg2); }
+
+    .section-chip {
+      display: inline-block;
+      font-size: .7rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--teal);
+      background: var(--teal-lt);
+      padding: .3rem .9rem; border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+    .section-chip.warm { color: var(--accent-dk); background: var(--accent-lt); }
+
+    h2.sec-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -.025em; line-height: 1.1;
+      margin-bottom: .75rem;
+    }
+    h2.sec-title em { font-style: italic; color: var(--ink-soft); }
+    .sec-lead {
+      font-size: .97rem; color: var(--ink-soft); font-weight: 300;
+      max-width: 620px; line-height: 1.75; margin-bottom: 3rem;
+    }
+
+    /* ─── ABOUT ─── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start;
+    }
+    .about-body p {
+      font-size: .95rem; color: var(--ink-soft);
+      font-weight: 300; line-height: 1.8; margin-bottom: 1.1rem;
+    }
+    .about-body strong { font-weight: 600; color: var(--ink); }
+    .about-note {
+      margin-top: 1.5rem; padding: 1.25rem 1.5rem;
+      border-left: 3px solid var(--accent);
+      background: var(--accent-lt);
+      border-radius: 0 10px 10px 0;
+      font-size: .88rem; color: var(--accent-dk); font-weight: 500;
+      font-style: italic;
+    }
+
+    /* ─── SERVICIOS ─── */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem;
+    }
+    .service-card {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 2rem 1.75rem;
+      display: flex; flex-direction: column;
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .35s ease;
+    }
+    .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: transparent; }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-num {
+      font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+      color: var(--ink-faint); margin-bottom: 1.25rem;
+    }
+    .service-card h3 {
+      font-family: var(--serif); font-size: 1.25rem;
+      letter-spacing: -.01em; margin-bottom: .75rem; line-height: 1.25;
+    }
+    .service-card p {
+      font-size: .88rem; color: var(--ink-soft);
+      font-weight: 300; line-height: 1.7; flex: 1; margin-bottom: 1.25rem;
+    }
+    .service-card ul {
+      list-style: none; margin-bottom: 1.75rem;
+    }
+    .service-card ul li {
+      font-size: .82rem; color: var(--ink-mid);
+      padding: .3rem 0; border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .service-card ul li::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+    }
+    .service-card ul li:last-child { border-bottom: none; }
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .65rem 1.35rem; border-radius: 999px;
+      background: var(--accent); color: #fff;
+      font-size: .82rem; font-weight: 600;
+      align-self: flex-start; transition: background .2s, transform .2s;
+    }
+    .btn-cta:hover { background: var(--accent-dk); transform: translateY(-1px); }
+    .btn-cta-outline {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .65rem 1.35rem; border-radius: 999px;
+      background: transparent; color: var(--teal);
+      border: 1.5px solid var(--teal);
+      font-size: .82rem; font-weight: 600;
+      align-self: flex-start; transition: background .2s, color .2s;
+    }
+    .btn-cta-outline:hover { background: var(--teal); color: #fff; }
+
+    /* ─── PROCESO ─── */
+    .steps { display: grid; gap: 1rem; }
+    .step {
+      display: grid; grid-template-columns: 64px 1fr;
+      gap: 1.5rem; align-items: start;
+      background: var(--surface);
+      border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 1.5rem; transition: border-color .25s, box-shadow .25s;
+    }
+    .step:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(194,130,90,.12); }
+    .step-num {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: grid; place-items: center;
+      background: var(--accent-lt); color: var(--accent-dk);
+      font-family: var(--serif); font-size: 1.2rem; font-weight: 700;
+    }
+    .step h4 { font-size: 1rem; font-weight: 600; margin-bottom: .35rem; }
+    .step p { font-size: .88rem; color: var(--ink-soft); font-weight: 300; line-height: 1.65; }
+
+    /* ─── PORTFOLIO ─── */
+    .portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .port-card {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: 18px; overflow: hidden;
+      transition: transform .35s, box-shadow .35s;
+    }
+    .port-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .port-img {
+      width: 100%; height: 220px; overflow: hidden;
+      position: relative;
+    }
+    .port-img svg { width: 100%; height: 100%; display: block; }
+    .port-body { padding: 1.75rem; }
+    .port-tag {
+      font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--ink-faint);
+      margin-bottom: .75rem;
+    }
+    .port-card h3 {
+      font-family: var(--serif); font-size: 1.6rem;
+      letter-spacing: -.02em; margin-bottom: .75rem;
+    }
+    .port-card p {
+      font-size: .88rem; color: var(--ink-soft);
+      font-weight: 300; line-height: 1.7; margin-bottom: 1.25rem;
+    }
+    .port-tags {
+      display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem;
+    }
+    .pt {
+      font-size: .72rem; font-weight: 500; color: var(--teal);
+      background: var(--teal-lt); padding: .25rem .7rem;
+      border-radius: 999px; letter-spacing: .02em;
+    }
+    .port-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+    /* ─── SOCIAL ─── */
+    .social-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+    .social-btn {
+      display: inline-flex; align-items: center; gap: .6rem;
+      padding: .7rem 1.35rem; border-radius: 999px;
+      border: 1.5px solid var(--line); background: var(--surface);
+      font-size: .85rem; font-weight: 500; color: var(--ink-mid);
+      transition: border-color .2s, color .2s, background .2s, transform .2s;
+    }
+    .social-btn:hover { border-color: var(--accent); color: var(--accent-dk); background: var(--accent-lt); transform: translateY(-2px); }
+    .social-icon { width: 18px; height: 18px; }
+
+    /* ─── CTA BAND ─── */
+    .cta-band {
+      background: linear-gradient(135deg, #1C1917 60%, #2D4A3E);
+      color: #fff; padding: 6rem 2.5rem;
+      position: relative; overflow: hidden;
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; top: -40%; right: -10%;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(194,130,90,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-band > * { position: relative; z-index: 1; }
+    .cta-band h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.08; letter-spacing: -.025em;
+      max-width: 700px; margin-bottom: 1rem;
+    }
+    .cta-band h2 em { font-style: italic; color: var(--accent); }
+    .cta-band p {
+      font-size: 1rem; color: rgba(255,255,255,.65);
+      font-weight: 300; max-width: 520px; line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+    .cta-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-white {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .85rem 2rem; border-radius: 999px;
+      background: #fff; color: var(--ink);
+      font-size: .88rem; font-weight: 600;
+      transition: background .2s, transform .2s;
+    }
+    .btn-white:hover { background: var(--accent-lt); transform: translateY(-2px); }
+    .btn-outline-white {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .85rem 2rem; border-radius: 999px;
+      background: transparent; color: rgba(255,255,255,.75);
+      border: 1.5px solid rgba(255,255,255,.25);
+      font-size: .88rem; font-weight: 500;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-outline-white:hover { border-color: rgba(255,255,255,.6); color: #fff; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      border-top: 1px solid var(--line);
+    }
+    .footer-logo { font-family: var(--serif); font-size: .95rem; color: var(--ink); }
+    .footer-copy { font-size: .78rem; color: var(--ink-faint); }
+    .footer-socials { display: flex; gap: 1.25rem; }
+    .footer-socials a { font-size: .78rem; color: var(--ink-soft); letter-spacing: .04em; transition: color .2s; }
+    .footer-socials a:hover { color: var(--accent); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(28px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0; transform: translateX(-30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+    /* ─── STAGGER ─── */
+    .stagger > * { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .stagger.visible > *:nth-child(1) { opacity:1;transform:none;transition-delay:.05s }
+    .stagger.visible > *:nth-child(2) { opacity:1;transform:none;transition-delay:.15s }
+    .stagger.visible > *:nth-child(3) { opacity:1;transform:none;transition-delay:.25s }
+    .stagger.visible > *:nth-child(4) { opacity:1;transform:none;transition-delay:.35s }
+    .stagger.visible > *:nth-child(5) { opacity:1;transform:none;transition-delay:.45s }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: .9rem 1.25rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 100px 1.25rem 60px; gap: 2rem; }
+      .hero::before { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .section { padding: 4rem 1.25rem; }
+      .cta-band { padding: 4rem 1.25rem; }
+      footer { padding: 1.75rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">Nadya Aguado</a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a class="nav-cta" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20tus%20servicios." target="_blank" rel="noopener">WhatsApp →</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="inicio">
+  <div>
+    <div class="hero-eyebrow"><span></span>Estrategia digital · Contenido · Sistemas · IA</div>
+    <h1>Organizo lo que tu negocio<br/>comunica, vende<br/>y <em>responde.</em></h1>
+    <p class="hero-sub">
+      Trabajo con marcas, servicios y negocios que tienen algo valioso, pero lo presentan con demasiado caos.<br/>Lo bajo a estructura, mensajes y activos digitales más claros.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#proceso">Ver cómo trabajo</a>
+      <a class="btn-ghost" href="#servicios">Ver servicios</a>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <h3>Qué suelo ordenar</h3>
+    <div class="mini-list">
+      <div class="mini-item">
+        <div class="mini-dot"></div>
+        <div>
+          <strong>Mensajes y atención</strong>
+          <span>Consultas que se enfrían, respuestas flojas y seguimiento inexistente.</span>
+        </div>
+      </div>
+      <div class="mini-item">
+        <div class="mini-dot"></div>
+        <div>
+          <strong>Servicios y oferta</strong>
+          <span>Lo que hacés tiene valor, pero no se entiende rápido ni se percibe bien.</span>
+        </div>
+      </div>
+      <div class="mini-item">
+        <div class="mini-dot"></div>
+        <div>
+          <strong>Contenido y sistema</strong>
+          <span>Muchas ideas, poca estructura y demasiado tiempo perdido en decidir.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROPUESTA ── -->
+<section class="section" id="propuesta">
+  <div class="about-grid">
+    <div class="reveal-left">
+      <div class="section-chip">¿Qué resuelvo?</div>
+      <h2 class="sec-title">El problema no es tu producto.<br/><em>Es todo lo que lo rodea.</em></h2>
+    </div>
+    <div class="about-body reveal">
+      <p>La mayoría de negocios pierde ventas no por falta de calidad, sino por <strong>caos en los mensajes, atención inconsistente, contenido que no convierte y sistemas que nadie entiende.</strong></p>
+      <p>Trabajo con pequeños negocios, marcas personales y emprendedores para ordenar exactamente eso: la presencia digital, la estructura de contenido, los recursos de venta y las herramientas de IA que realmente sirven.</p>
+      <p>No vendo metodologías de 12 pasos. Detecto el problema real, propongo lo que funciona, lo implementamos.</p>
+      <div class="about-note">Sin humo técnico. Sin contenido clonado. Con criterio, estructura y uso práctico de herramientas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICIOS ── -->
+<section class="section section-alt" id="servicios">
+  <div class="section-chip warm">Servicios</div>
+  <h2 class="sec-title reveal">Cómo te puedo<br/><em>ayudar</em></h2>
+  <p class="sec-lead reveal">No vendo una herramienta aislada. Trabajo sobre problemas concretos: atención comercial, webs poco claras, contenido sin sistema y estructura digital débil.</p>
+
+  <div class="services-grid stagger">
+    <div class="service-card">
+      <div class="service-num">01 — ATENCIÓN COMERCIAL</div>
+      <h3>Sistema Anti-Consultas Perdidas</h3>
+      <p>Ordeno mensajes, respuestas y seguimiento para que una consulta no se pierda por desorden digital.</p>
+      <ul>
+        <li>Diagnóstico de fugas</li>
+        <li>Mensajes base y plantillas</li>
+        <li>Orden de atención</li>
+        <li>Seguimiento simple</li>
+      </ul>
+      <a class="btn-cta" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20el%20Sistema%20Anti-Consultas%20Perdidas." target="_blank" rel="noopener">Consultar →</a>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">02 — PRESENCIA DIGITAL</div>
+      <h3>Webs comerciales</h3>
+      <p>Diseño landing pages y webs simples orientadas a claridad, credibilidad y acción. Nada de páginas bonitas que no dicen nada.</p>
+      <ul>
+        <li>Estructura y arquitectura</li>
+        <li>Copy de conversión</li>
+        <li>Implementación simple</li>
+        <li>Checklist de validación</li>
+      </ul>
+      <a class="btn-cta" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20una%20web%20comercial." target="_blank" rel="noopener">Consultar →</a>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">03 — CONTENIDO E IA</div>
+      <h3>Sistemas de contenido e IA útil</h3>
+      <p>Creo estructuras, prompts, recursos y generadores para producir contenido con más velocidad y menos desgaste.</p>
+      <ul>
+        <li>Calendarios y sistemas</li>
+        <li>Prompts operativos</li>
+        <li>GPTs y flujos internos</li>
+        <li>Activos digitales reutilizables</li>
+      </ul>
+      <a class="btn-cta" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20sistemas%20de%20contenido%20e%20IA." target="_blank" rel="noopener">Consultar →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESO ── -->
+<section class="section" id="proceso">
+  <div class="section-chip">Mi forma de trabajar</div>
+  <h2 class="sec-title reveal">Empiezo por lo que<br/><em>más fricción genera.</em></h2>
+  <p class="sec-lead reveal">No parto de la herramienta. Parto de la parte del negocio que hoy está floja o mal resuelta.</p>
+
+  <div class="steps stagger">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div>
+        <h4>Detecto el problema real</h4>
+        <p>No parto de la herramienta. Parto de la parte del negocio que hoy está floja o mal resuelta.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div>
+        <h4>Defino una salida simple</h4>
+        <p>Busco una solución clara, usable y proporcional al momento real del negocio, sin sobrecargarlo.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div>
+        <h4>Lo bajo a algo concreto</h4>
+        <p>Puede ser un sistema, una web, una estructura de mensajes, un recurso o un flujo de contenido.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div>
+        <h4>Dejo criterio y continuidad</h4>
+        <p>No solo entrego piezas. También dejo una lógica para que no vuelvas a improvisar todo desde cero.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PORTFOLIO ── -->
+<section class="section section-alt" id="portfolio">
+  <div class="section-chip warm">Portfolio</div>
+  <h2 class="sec-title reveal">Verticales y <em>proyectos</em></h2>
+  <p class="sec-lead reveal">Mi marca personal es el paraguas. Desde acá también desarrollo verticales y proyectos específicos según nicho.</p>
+
+  <div class="portfolio-grid">
+    <!-- TURISHACK -->
+    <div class="port-card reveal">
+      <div class="port-img">
+        <!-- Imagen generada: paisaje turístico con sistema digital -->
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="tg1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#2D7A6F"/>
+              <stop offset="100%" style="stop-color:#1A4A44"/>
+            </linearGradient>
+            <linearGradient id="tg2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#D4EEEA;stop-opacity:.5"/>
+              <stop offset="100%" style="stop-color:transparent"/>
+            </linearGradient>
+          </defs>
+          <rect width="600" height="220" fill="url(#tg1)"/>
+          <!-- sky gradient -->
+          <rect width="600" height="110" fill="url(#tg2)"/>
+          <!-- mountains -->
+          <polygon points="0,160 80,60 160,140 240,40 320,120 400,30 480,100 560,50 600,80 600,220 0,220" fill="rgba(45,74,62,.6)"/>
+          <polygon points="0,180 100,100 200,160 300,80 400,140 500,70 600,110 600,220 0,220" fill="rgba(29,57,47,.85)"/>
+          <!-- cabin -->
+          <rect x="240" y="148" width="60" height="45" rx="3" fill="#F7F4F0"/>
+          <polygon points="230,150 300,115 370,150" fill="#C2825A"/>
+          <rect x="262" y="163" width="16" height="20" rx="2" fill="#2D7A6F"/>
+          <rect x="284" y="160" width="12" height="12" rx="1" fill="#B8D9D5"/>
+          <!-- trees -->
+          <polygon points="190,193 200,155 210,193" fill="#1A4A44"/>
+          <polygon points="200,185 210,155 220,185" fill="#1A4A44"/>
+          <polygon points="370,193 380,158 390,193" fill="#1A4A44"/>
+          <polygon points="380,183 390,155 400,183" fill="#1A4A44"/>
+          <!-- phone/screen element -->
+          <rect x="430" y="80" width="80" height="110" rx="8" fill="rgba(247,244,240,.15)" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/>
+          <rect x="438" y="95" width="64" height="8" rx="3" fill="rgba(255,255,255,.4)"/>
+          <rect x="438" y="110" width="44" height="5" rx="2" fill="rgba(255,255,255,.25)"/>
+          <rect x="438" y="120" width="54" height="5" rx="2" fill="rgba(255,255,255,.25)"/>
+          <rect x="438" y="135" width="38" height="24" rx="4" fill="rgba(194,130,90,.7)"/>
+          <text x="444" y="151" font-family="sans-serif" font-size="8" fill="white" font-weight="600">Consultar</text>
+          <!-- label -->
+          <rect x="20" y="20" width="90" height="24" rx="12" fill="rgba(255,255,255,.15)"/>
+          <text x="30" y="36" font-family="sans-serif" font-size="11" fill="white" font-weight="600">Turismo</text>
+        </svg>
+      </div>
+      <div class="port-body">
+        <div class="port-tag">Vertical — Turismo &amp; Hospitalidad</div>
+        <h3>Turishack</h3>
+        <p>Sistemas simples para negocios turísticos que quieren responder mejor, ordenar consultas y vender con más claridad. Atención, mensajes y estructura digital adaptados al rubro.</p>
+        <div class="port-tags">
+          <span class="pt">Atención comercial</span>
+          <span class="pt">Mensajería</span>
+          <span class="pt">Sistemas de venta</span>
+        </div>
+        <div class="port-actions">
+          <a class="btn-cta-outline" href="https://nadya-coder.github.io/nadya-landing/" target="_blank" rel="noopener">Ver Turishack →</a>
+          <a class="btn-cta" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20Turishack." target="_blank" rel="noopener">Consultar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SENSSIA -->
+    <div class="port-card reveal" style="transition-delay:.15s">
+      <div class="port-img">
+        <!-- Imagen generada: estética sensorial/gourmet -->
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sg1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#2E1A0E"/>
+              <stop offset="60%" style="stop-color:#5C3317"/>
+              <stop offset="100%" style="stop-color:#3B1F0A"/>
+            </linearGradient>
+            <radialGradient id="sg2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" style="stop-color:#C2825A;stop-opacity:.5"/>
+              <stop offset="100%" style="stop-color:transparent"/>
+            </radialGradient>
+            <linearGradient id="sg3" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#F0E4D9"/>
+              <stop offset="100%" style="stop-color:#C2825A"/>
+            </linearGradient>
+          </defs>
+          <rect width="600" height="220" fill="url(#sg1)"/>
+          <ellipse cx="300" cy="110" rx="200" ry="120" fill="url(#sg2)"/>
+          <!-- table surface -->
+          <ellipse cx="300" cy="175" rx="220" ry="30" fill="rgba(92,51,23,.6)"/>
+          <!-- jar / product -->
+          <rect x="255" y="100" width="90" height="80" rx="10" fill="#F0E4D9"/>
+          <rect x="262" y="92" width="76" height="15" rx="4" fill="#C2825A"/>
+          <rect x="250" y="170" width="100" height="10" rx="3" fill="#D4A882"/>
+          <!-- label on jar -->
+          <rect x="265" y="118" width="70" height="42" rx="4" fill="rgba(194,130,90,.15)" stroke="rgba(194,130,90,.4)" stroke-width="1"/>
+          <text x="300" y="136" font-family="serif" font-size="11" fill="#5C3317" text-anchor="middle" font-style="italic">SENSSIA</text>
+          <line x1="272" y1="141" x2="328" y2="141" stroke="rgba(92,51,23,.3)" stroke-width=".8"/>
+          <text x="300" y="154" font-family="sans-serif" font-size="7" fill="rgba(92,51,23,.6)" text-anchor="middle">GOURMET SENSORIAL</text>
+          <!-- spoon -->
+          <ellipse cx="380" cy="155" rx="18" ry="8" fill="#E8C9A0" transform="rotate(-35,380,155)"/>
+          <rect x="371" y="154" width="60" height="5" rx="2" fill="#E8C9A0" transform="rotate(-35,380,155)"/>
+          <!-- scattered dots / crumbs -->
+          <circle cx="220" cy="160" r="3" fill="rgba(194,130,90,.5)"/>
+          <circle cx="210" cy="170" r="2" fill="rgba(194,130,90,.3)"/>
+          <circle cx="400" cy="165" r="2.5" fill="rgba(194,130,90,.4)"/>
+          <!-- leaves -->
+          <ellipse cx="175" cy="140" rx="25" ry="10" fill="rgba(45,122,111,.5)" transform="rotate(-25,175,140)"/>
+          <ellipse cx="165" cy="148" rx="20" ry="8" fill="rgba(45,122,111,.4)" transform="rotate(-15,165,148)"/>
+          <!-- badge -->
+          <rect x="20" y="20" width="110" height="24" rx="12" fill="rgba(255,255,255,.1)"/>
+          <text x="30" y="36" font-family="sans-serif" font-size="11" fill="rgba(240,228,217,.9)" font-weight="600">Sensorial · Gourmet</text>
+        </svg>
+      </div>
+      <div class="port-body">
+        <div class="port-tag">Proyecto — Comunicación &amp; Contenido</div>
+        <h3>SENSSIA</h3>
+        <p>Proyecto orientado a contenido, herramientas y comunicación aplicada a productos sensoriales y gourmet. Estructura de mensajes, identidad comunicacional y sistema de contenido reutilizable.</p>
+        <div class="port-tags">
+          <span class="pt">Contenido estratégico</span>
+          <span class="pt">Identidad digital</span>
+          <span class="pt">Sistema IA</span>
+        </div>
+        <div class="port-actions">
+          <a class="btn-cta" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20SENSSIA." target="_blank" rel="noopener">Consultar →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOCIAL / ENCUENTRAME ── -->
+<section class="section" id="redes">
+  <div class="section-chip">Canales</div>
+  <h2 class="sec-title reveal">Encontrame<br/><em>también acá</em></h2>
+  <p class="sec-lead reveal">Esta es mi base principal. Desde acá podés ir a mis servicios, a mis verticales y a mis otros canales.</p>
+  <div class="social-row reveal">
+    <a class="social-btn" href="https://www.instagram.com/marunadu09/" target="_blank" rel="noopener">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      Instagram
+    </a>
+    <a class="social-btn" href="https://www.linkedin.com/in/nadya-aguado-9b71a5378/" target="_blank" rel="noopener">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a class="social-btn" href="https://www.facebook.com/nadymari" target="_blank" rel="noopener">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      Facebook
+    </a>
+    <a class="social-btn" href="mailto:turishack@gmail.com?subject=Consulta%20desde%20la%20landing%20de%20Nadya">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Email
+    </a>
+    <a class="social-btn" href="https://wa.me/542614194636" target="_blank" rel="noopener">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ── CTA BAND ── -->
+<section class="cta-band" id="contacto">
+  <div class="section-chip" style="color:rgba(212,168,130,.9);background:rgba(194,130,90,.2)">Trabajo con criterio, no con magia</div>
+  <h2>Si tu negocio necesita orden<br/><em>más que inspiración,</em><br/>estás en el lugar correcto.</h2>
+  <p>Podemos empezar por atención, por web, por contenido o por estructura. Lo importante es dejar de improvisar donde más te cuesta sostener el negocio.</p>
+  <div class="cta-actions">
+    <a class="btn-white" href="https://wa.me/542614194636?text=Hola%20Nadya,%20quiero%20consultarte%20por%20mis%20necesidades%20digitales." target="_blank" rel="noopener">Escribirme por WhatsApp</a>
+    <a class="btn-outline-white" href="mailto:turishack@gmail.com?subject=Consulta%20desde%20la%20landing%20de%20Nadya">Enviar email</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span class="footer-logo">Nadya Aguado</span>
+  <div class="footer-socials">
+    <a href="https://www.instagram.com/marunadu09/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.linkedin.com/in/nadya-aguado-9b71a5378/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="mailto:turishack@gmail.com">Email</a>
+  </div>
+  <span class="footer-copy">© 2025 Nadya Aguado · Estrategia digital, sistemas e IA útil</span>
+</footer>
+
+<script>
+  // cursor dot
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  // navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // IntersectionObserver for reveals + stagger
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal, .reveal-left, .stagger').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
